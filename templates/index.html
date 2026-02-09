@@ -4,19 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOST AND FOUND | ARCHIVE</title>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Almendra+Display&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg: #d1d1d1; 
-            --text: #000; 
-            --gothic: 'UnifrakturMaguntia', cursive;
-        }
-        
+        :root { --bg: #d1d1d1; --text: #000; --gothic: 'Almendra Display', serif; }
         body, html { 
             margin: 0; padding: 0; height: 100%; 
             background-color: var(--bg); color: var(--text);
             font-family: 'Inter', sans-serif; text-transform: uppercase;
-            letter-spacing: 0.15em; overflow-x: hidden;
+            letter-spacing: 0.1em; overflow-x: hidden;
             background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
         }
 
@@ -26,55 +21,30 @@
             background: var(--bg); z-index: 1000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
-            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
         }
-
-        .logo { 
-            font-family: var(--gothic); 
-            font-size: 4rem; 
-            margin-bottom: 40px; 
-            letter-spacing: -2px;
-        }
-
-        .input-group { display: flex; flex-direction: column; gap: 20px; width: 350px; }
-
+        .logo { font-family: var(--gothic); font-size: 3.5rem; margin-bottom: 40px; }
+        .input-group { display: flex; flex-direction: column; gap: 20px; width: 320px; }
         input {
             background: transparent; border: none; border-bottom: 1px solid #000;
-            outline: none; text-align: center; padding: 15px; 
-            font-size: 1rem; 
-            /* Applying Gothic to inputs */
-            font-family: var(--gothic); 
-            letter-spacing: 2px;
+            outline: none; text-align: center; padding: 12px; font-size: 0.8rem;
+            font-family: var(--gothic); letter-spacing: 2px;
         }
-
         .btn {
             margin-top: 30px; background: #000; color: #fff; border: 1px solid #000;
-            padding: 15px; cursor: pointer; 
-            font-size: 1.2rem; 
+            padding: 15px; cursor: pointer; font-size: 1rem; font-family: var(--gothic);
             transition: 0.3s;
-            /* Applying Gothic to button */
-            font-family: var(--gothic);
         }
-
         .btn:hover { background: transparent; color: #000; }
-        #err { color: #d00; font-size: 0.6rem; margin-top: 15px; visibility: hidden; font-family: 'Inter'; }
+        #err { color: #d00; font-size: 0.6rem; margin-top: 15px; visibility: hidden; }
 
         /* --- DASHBOARD --- */
         #main-content { display: none; padding: 40px; }
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; }
+        .admin-controls { display: none; border: 1px solid #000; padding: 30px; margin-bottom: 40px; text-align: center; }
+        .upload-btn { border: 1px dashed #000; padding: 30px; cursor: pointer; font-family: var(--gothic); font-size: 1.2rem; }
         
-        .admin-controls { 
-            display: none; border: 1px solid #000; padding: 40px; 
-            margin-bottom: 40px; text-align: center; 
-        }
-
-        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-        .item-card { filter: grayscale(1); border: 1px solid #000; height: 400px; background: #c0c0c0; }
-        
-        .upload-btn { 
-            border: 1px dashed #000; padding: 40px; text-align: center; 
-            cursor: pointer; margin-top: 20px; font-family: var(--gothic); font-size: 1.5rem;
-        }
+        /* Hidden file input */
+        #cameraInput { display: none; }
     </style>
 </head>
 <body>
@@ -82,32 +52,32 @@
     <div id="gate">
         <div class="logo">Lost & Found</div>
         <div class="input-group">
-            <input type="email" id="email" placeholder="Email Address">
-            <input type="password" id="pass" placeholder="Password">
-            <button class="btn" onclick="handleAuth()">Access Archive</button>
-            <div id="err">INVALID CREDENTIALS</div>
+            <input type="email" id="email" placeholder="MONROE EMAIL">
+            <input type="password" id="pass" placeholder="PASSWORD">
+            <button class="btn" onclick="handleAuth()">ACCESS ARCHIVE</button>
+            <div id="err">DENIED: CHECK DOMAIN OR PASSWORD</div>
         </div>
     </div>
 
     <div id="main-content">
         <header>
             <div style="font-size: 0.7rem;" id="user-type">GUEST</div>
-            <div class="logo" style="font-size: 2.5rem; margin: 0;">Lost & Found</div>
-            <div style="font-size: 0.7rem;">SEARCH ARCHIVE</div>
+            <div class="logo" style="font-size: 2rem; margin: 0;">Lost & Found</div>
+            <div style="font-size: 0.7rem;">ARCHIVE v.26</div>
         </header>
 
         <div id="admin-panel" class="admin-controls">
-            <h3 style="font-family: var(--gothic); font-size: 2rem;">Admin: Add Found Item</h3>
-            <input type="file" id="imageUpload" accept="image/*" style="display:none;">
-            <div class="upload-btn" onclick="document.getElementById('imageUpload').click()">Take Photo / Upload</div>
-            <button class="btn" style="width: 250px;">Submit to Archive</button>
+            <h3 style="font-family: var(--gothic);">Admin: Archive New Item</h3>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment">
+            <div class="upload-btn" onclick="document.getElementById('cameraInput').click()">
+                TAP TO OPEN CAMERA / UPLOAD PHOTO
+            </div>
+            <button class="btn" style="width: 200px;" onclick="uploadToBackend()">SUBMIT TO ARCHIVE</button>
+            <p id="uploadStatus" style="font-size: 0.6rem; margin-top: 10px;"></p>
         </div>
 
-        <div class="gallery">
-            <div class="item-card"></div>
-            <div class="item-card"></div>
-            <div class="item-card"></div>
-        </div>
+        <div class="gallery" id="gallery">
+            </div>
     </div>
 
     <script>
@@ -116,14 +86,14 @@
             const pass = document.getElementById('pass').value;
             const err = document.getElementById('err');
 
-            // Domain Logic
-            const isAdmin = email.endsWith("@monroe.k12.nj.us") && !email.endsWith("@students.monroe.k12.nj.us");
-            const isStudent = email.endsWith("@students.monroe.k12.nj.us");
+            // Corrected Passwords & Domains
+            const isStudent = email.endsWith("@students.monroe.k12.nj.us") && pass === "MTHSFalcons2027";
+            const isAdmin = email.endsWith("@monroe.k12.nj.us") && !email.endsWith("@students.monroe.k12.nj.us") && pass === "MTHS-PurplePride-2026";
 
-            if (isAdmin && pass === "MTHSLostAdmin") {
+            if (isAdmin) {
                 showSite("ADMIN ACCESS");
                 document.getElementById('admin-panel').style.display = 'block';
-            } else if (isStudent && pass === "MTHSFalcons2027") {
+            } else if (isStudent) {
                 showSite("STUDENT ACCESS");
             } else {
                 err.style.visibility = 'visible';
@@ -134,6 +104,35 @@
             document.getElementById('gate').style.transform = 'translateY(-100%)';
             document.getElementById('main-content').style.display = 'block';
             document.getElementById('user-type').innerText = role;
+        }
+
+        // Camera Upload Logic
+        function uploadToBackend() {
+            const fileInput = document.getElementById('cameraInput');
+            const status = document.getElementById('uploadStatus');
+            
+            if (fileInput.files.length === 0) {
+                status.innerText = "NO PHOTO SELECTED";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            status.innerText = "UPLOADING TO ARCHIVE...";
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                status.innerText = "ITEM ARCHIVED SUCCESSFULLY";
+                fileInput.value = ""; // Clear input
+            })
+            .catch(e => {
+                status.innerText = "UPLOAD FAILED. CHECK BACKEND.";
+            });
         }
     </script>
 </body>
